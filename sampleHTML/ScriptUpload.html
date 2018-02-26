@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+table.example2 {background-color:transparent;border-collapse:collapse;width:100%;}
+table.example2 th, table.example2 td {text-align:center;border:1px solid black;padding:5px;}
+table.example2 td {background-color:AntiqueWhite;}
+table.example2 td:first-child {width:20%;}
+</style>
+<body>
+<form action="/html/tags/html_form_tag_action.cfm" method="get">
+<table class="example2">
+<tr>
+<td><a href="url">Scripts</a></td><td><a href="url">Test Suites</a></td><td><a href="url">Test Schedule</a></td><td><a href="url">Reports</a></td>
+</tr>
+</table><br /><br />
+<fieldset>
+<legend>Upload Script</legend>
+<table>
+<tr>
+	<td>
+		<label for="scriptType">Script type:  </label>
+	</td>
+	<td>
+		<select name="scriptType">
+		<option value ="0">Selenium</option>
+		<option value ="1">Sahi</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="browseros">Code:  </label>
+	</td>
+	<td>
+		<textarea rows="10" cols="100">
+var $t1 = _testcase("AutoLogin_1", "Save Orig acct settings");
+$t1.start();
+login();
+_click(_link("Settings"));
+_click(_link("Security Manager"));
+_click(_link("Password Policy"));
+var $OrigNewUserPswdReq = OrigNewUserPswdReq();
+_setSelected(_select("newUserRequest"), "Required");
+_click(_image("Save changes"));
+$t1.end();
+
+var $t2 = _testcase("AutoLogin_2", "Create Prospect for Auto Login Testing");
+$t2.start();
+_click(_listItem("Create"));
+_setValue(_textbox("bFirstName"),$fName);
+_setValue(_textbox("bLastName"),$lastName);
+_setValue(_textbox("bEmailAddress"),$createEmail);
+_setValue(_textbox("bHomePhone"),$createPhone1+"-"+$createPhone2+"-"+$createPhone3);
+_setValue(_textbox("borrowerDOB"),$DOBmonths+"-"+$DOBdays+"-"+$DOByear);
+_setSelected(_select("leadSource"),"Marksman");
+_setSelected(_select("product1"),"Purchase");
+_setSelected(_select("occupancy"),"Second Home");
+_setValue(_textarea("comments"),"Auto Login Testing");
+_click(_div("Save"));
+_click(_listItem("More Prospect Info"));
+var $pappid = _getText(_cell("data_lines", _near(_cell("Mortech Prospect ID"))));
+_click(_link("close"));
+_click(_link("Logout"));
+$t2.end();
+
+var $t3 = _testcase("AutoLogin_3", "Auto Login Test - Prospect");
+$t3.start();
+_navigateTo("http://" + $url + "/mpg/servlet/autoLoginServlet?customerId="+$customerId+"&emailAddress="+$emailaddy+"&pappid=" + $pappid);
+_assertEqual(_title("Prospect Details"), "Prospect Details");
+_assertExists(_span("" + $lastName + ""));
+_assertExists(_span($fName));
+_click(_link("Logout"));
+$t3.end();
+
+var $t4 = _testcase("AutoLogin_4", "Basic Username/Password Authentication");
+$t4.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&username=" + $username + "&password=" + $password);
+_assertExists(_link("Logout"));
+_click(_link("Logout"));
+$t4.end();
+
+var $t5 = _testcase("AutoLogin_5", "Email Address authentication");
+$t5.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&emailAddress=" + $emailaddy );
+_assertExists(_link("Logout"));
+_click(_link("Logout"));
+$t5.end();
+
+var $t6 = _testcase("AutoLogin_6", "Email Address authentication with password");
+$t6.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&emailAddress=" + $emailaddy + "&lo_pwd=" + $password );
+_assertExists(_link("Logout"));
+_click(_link("Logout"));
+$t6.end();
+
+var $t7 = _testcase("AutoLogin_7", "Email Address authentication failed redirect");
+$t7.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&emailAddress=invalid@mortech-inc.nonreg&invalidRedirectURL=http://www.google.com");
+_assertExists(_title("Google"));
+$t7.end();
+
+var $t8 = _testcase("AutoLogin_8", "Auto create user required password creation");
+$t8.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&emailAddress=autouser1@mortech-inc.nonreg&createUser=1&userTemplateId=" + $tempId + "&password=" + $password );
+_assertExists(_cell("Your Company's Password Policy:"));
+_setValue(_password("password"), "mortech1");
+_setValue(_password("repassword"), "mortech1");
+_click(_image("Save this password"));
+_assertExists(_cell("Basic Information/Notification Options/Other Settings"));
+_setValue(_textbox("username"), "Regression");
+_setValue(_textbox("name"), "Test");
+_setValue(_textbox("address1"), "123");
+_setValue(_textbox("city"), "lincoln");
+_setSelected(_select("state"), "Nebraska");
+_setValue(_textbox("zip"), "68512");
+_setValue(_textbox("phone"), "402-555-8888");
+_click(_image("Save user setup information"));
+_assertExists(_bold("Test"));
+_click(_link("Logout"));
+login();
+_click(_link("Settings"));
+_click(_link("User Manager"));
+_click(_link("User Setup"));
+_assertExists(_link("Regression"));
+_click(_link("Regression"));
+_assertEqual("Test", _getValue(_textbox("name")));
+_assertEqual("autouser1@mortech-inc.nonreg", _getValue(_textbox("email")));
+_click(_image("delete loan officer"));
+_click(_image("Delete and assign prospects"));
+_assertNotExists(_link("Regression"));
+_click(_link("Logout"));
+$t8.end();
+
+var $t9 = _testcase("AutoLogin_9", "Set create user optional password creation");
+$t9.start();
+login();
+_click(_link("Settings"));
+_click(_link("Security Manager"));
+_click(_link("Password Policy"));
+_setSelected(_select("newUserRequest"), "Optional");
+_click(_image("Save changes"));
+$t9.end();
+
+var $t10 = _testcase("AutoLogin_10", "Auto create user optional password creation");
+$t10.start();
+_navigateTo("http://" + $url + "/mpg/servlet/loginServlet?customerId=" + $customerId + "&emailAddress=autouser1@mortech-inc.nonreg&createUser=1&userTemplateId=" + $tempId + "&password=" + $password );
+_assertNotExists(_cell("Your Company's Password Policy:"));
+_assertExists(_cell("Basic Information/Notification Options/Other Settings"));
+_setValue(_textbox("username"), "Regression");
+_setValue(_textbox("name"), "Test");
+_setValue(_textbox("address1"), "123");
+_setValue(_textbox("city"), "lincoln");
+_setSelected(_select("state"), "Nebraska");
+_setValue(_textbox("zip"), "68512");
+_setValue(_textbox("phone"), "402-555-8888");
+_click(_image("Save user setup information"));
+_assertExists(_bold("Test"));
+_click(_link("Logout"));
+login();
+_click(_link("Settings"));
+_click(_link("User Manager"));
+_click(_link("User Setup"));
+_assertExists(_link("Regression"));
+_click(_link("Regression"));
+_assertEqual("Test", _getValue(_textbox("name")));
+_assertEqual("autouser1@mortech-inc.nonreg", _getValue(_textbox("email")));
+_click(_image("delete loan officer"));
+_click(_image("Delete and assign prospects"));
+_assertNotExists(_link("Regression"));
+_click(_link("Logout"));
+$t10.end();
+
+var $t11 = _testcase("AutoLogin_11", "Set new user password creation to Orig acct setting");
+$t11.start();
+login();
+_click(_link("Settings"));
+_click(_link("Security Manager"));
+_click(_link("Password Policy"));
+_setSelected(_select("newUserRequest"), $OrigNewUserPswdReq);
+_click(_image("Save changes"));
+_click(_link("Logout"));
+$t11.end();
+
+		</textarea>
+	</td>
+</tr>
+<tr>
+	<td>
+	<input type="submit" value="Save" />
+	</td>
+</tr>
+</table>
+</fieldset>
+<br />
+<table>
+<tr>
+	<td> Existing Scripts: </td>
+	<td> 
+		<select style="width: 200px; height: 200px" multiple>
+		  <option value="0">AutoLogin</option>
+		  <option value="1">AssignmentRules</option>
+		  <option value="2">ClosingFeesSetup</option>
+		  <option value="3">AttachProfitLeadSrc</option>
+		  <option value="4">CreateProfitTable</option>
+		  <option value="5">CreateUser</option>
+		  <option value="6">CreateUser</option>
+		  <option value="7">CreateUser</option>
+		  <option value="8">CreateUser</option>
+		  <option value="9">CreateUser</option>
+		</select> 
+	</td>
+<tr>
+</table>
+</form>
+</body>
+</html>

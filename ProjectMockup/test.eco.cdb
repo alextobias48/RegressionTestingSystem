@@ -1,0 +1,98 @@
+<!doctype html>
+<meta charset = "utf-8">
+<title>The Forest of Lyrica</title>
+
+<html>
+  <head>
+    <script type="text/javascript">
+
+      function activateTab(pageId) {
+          var tabCtrl = document.getElementById('tabCtrl');
+          var pageToActivate = document.getElementById(pageId);
+          for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+              var node = tabCtrl.childNodes[i];
+              if (node.nodeType == 1) { /* Element */
+                  node.style.display = (node == pageToActivate) ? 'block' : 'none';
+              }
+          }
+      }
+
+    </script>
+  </head>
+  <body>
+      <tr>
+        <button onclick="javascript:activateTab('page1')">Suite 1</button>
+        <button onclick="javascript:activateTab('page2')">Suite 2</button>
+        <button onclick="javascript:activateTab('page3')">Suite 3</button>
+        <button onclick="javascript:activateTab('page4')">Suite 4</button>
+        <button onclick="javascript:activateTab('page5')">Suite 5</button>
+      </tr>
+    <div id="tabCtrl">
+      <div id="page1" style="display: block;">
+        <table border="1">
+          <tr>
+            <th>Test Date</th>
+            <th>02/12</th>
+            <th>02/13</th>
+            <th>02/14</th>
+            <th>02/15</th>
+            <th>02/16</th>
+            <th>02/17</th>
+          </tr>
+          <tr>
+            <th>Release Version</th>
+            <th>1.0.0</th>
+            <th>1.0.1</th>
+            <th>1.0.2</th>
+            <th>1.0.3</th>
+            <th>1.0.4</th>
+            <th>1.0.5</th>
+          </tr>
+          <tr>
+            <td>'Test Case Name'</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+          </tr>
+        </table>
+      </div>
+      <div id="page2" style="display: none;">
+        <table border="1">
+          <tr>
+            <th>Test Date</th>
+            <th>02/12</th>
+            <th>02/13</th>
+            <th>02/14</th>
+            <th>02/15</th>
+            <th>02/16</th>
+            <th>02/17</th>
+          </tr>
+          <tr>
+            <th>Release Version</th>
+            <th>1.0.0</th>
+            <th>1.0.1</th>
+            <th>1.0.2</th>
+            <th>1.0.3</th>
+            <th>1.0.4</th>
+            <th>1.0.5</th>
+          </tr>
+          <tr>
+            <td>'Test Case Name'</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+            <td>results</td>
+          </tr>
+        </table>
+      </div>
+      <div id="page3" style="display: none;">No Test Suite Data</div>
+      <div id="page4" style="display: none;">No Test Suite Data</div>
+      <div id="page5" style="display: none;">No Test Suite Data</div>
+    </div>
+  </body>
+</html>

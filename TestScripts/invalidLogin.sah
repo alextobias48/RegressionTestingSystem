@@ -1,0 +1,18 @@
+
+function setUp(){
+	var $suiteinfo = _suiteInfo();
+	var $url = $suiteinfo.baseURL;
+	_navigateTo($url);
+	_wait(1000);
+}
+
+function testInvalidLogin(){
+	_setValue(_textbox("customerid"), "30james");
+	_setValue(_textbox("username"), "Administrator");
+	_setValue(_textbox("username"), "Administrator");
+	_click(_image("login>>"));
+	_assertExists(_cell("Invalid login, please try again, or click 'Forgot Password' to recover."));
+	_assert(_isVisible(_cell("Invalid login, please try again, or click 'Forgot Password' to recover.")));
+}
+
+_runUnitTests();

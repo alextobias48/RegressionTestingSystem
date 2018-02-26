@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+table.example2 {background-color:transparent;border-collapse:collapse;width:100%;}
+table.example2 th, table.example2 td {text-align:center;border:1px solid black;padding:5px;}
+table.example2 td {background-color:AntiqueWhite;}
+table.example2 td:first-child {width:20%;}
+</style>
+<body>
+<form action="/html/tags/html_form_tag_action.cfm" method="get">
+<table class="example2">
+<tr>
+<td><a href="url">Scripts</a></td><td><a href="url">Test Suites</a></td><td><a href="url">Test Schedule</a></td><td><a href="url">Reports</a></td>
+</tr>
+</table><br /><br />
+<fieldset>
+<legend>Test Schedule Setup</legend>
+<table>
+<tr>
+	<td>
+		<label for="testSchedName">Test Schedule Name:  </label>
+	</td>
+	<td>
+		<input type="text" name="hourmin" style="width:200px" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="testSuite">Test Suite:  </label>
+	</td>
+	<td>
+		<select name="testSuite">
+		<option value ="0">RegLev1</option>
+		<option value ="1">RegLev2</option>
+		<option value ="2">RegLev3</option>
+		<option value ="3">RegLev4</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="browseros">Browser/OS:  </label>
+	</td>
+	<td>
+		<select name="browseros">
+		<option value ="0">IE8/Win7</option>
+		<option value ="1">Chrome/Win7</option>
+		<option value ="2">IE8/XP</option>
+		<option value ="3">IE9/Win7</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="environment">Environment:  </label>
+	</td>
+	<td>
+		<select name="environment">
+		<option value ="0">live</option>
+		<option value ="1">dev1</option>
+		<option value ="2">dev2</option>
+		<option value ="3">dev3</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="environment">Weekly Schedule:  </label>
+	</td>
+	<td>
+		<table>
+		<tr>
+			<td width="35px" >Sun</td>
+			<td width="35px" >Mon</td>
+			<td width="35px" >Tu</td>
+			<td width="35px" >Wed</td>
+			<td width="35px" >Th</td>
+			<td width="35px" >Fri</td>
+			<td width="35px" >Sat</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="sat" value="sat"></td>
+			<td><input type="checkbox" name="mon" value="mon"></td>
+			<td><input type="checkbox" name="tues" value="tues"></td>
+			<td><input type="checkbox" name="wed" value="wed"></td>
+			<td><input type="checkbox" name="thurs" value="thurs"></td>
+			<td><input type="checkbox" name="fri" value="fri"></td>
+			<td><input type="checkbox" name="sun" value="sun"></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label for="environment">Time of day:  </label>
+	</td>
+	<td>
+		<table>
+		<tr>
+			<td>Hour:Min</td>
+			<td>AM/PM</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="hourmin" style="width:80px" /></td>
+			<td>
+				<select name="ampm">
+				<option value ="0">AM</option>
+				<option value ="1">PM</option>
+				</select>
+			</td>
+		</tr>
+		</table>
+	</td>
+<tr>
+<tr>
+	<td>
+	<input type="submit" value="Save" />
+	</td>
+</tr>
+</table>
+</fieldset>
+<br />
+<table>
+<tr>
+	<td> Existing Test Schedules: </td>
+	<td> 
+		<select style="width: 200px" multiple>
+		  <option value="0">PreRelease</option>
+		  <option value="1">PostRelease</option>
+		  <option value="2">RegressionLev1</option>
+		  <option value="3">RegressionLev2</option>
+		</select> 
+	</td>
+<tr>
+</table>
+</form>
+</body>
+</html>
